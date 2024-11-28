@@ -59,11 +59,13 @@ const Home: NextPage = () => {
     setDifficultyValue(value);
   };
 
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImage, setSelectedImage] = useState<string | null>("base");
 
   const handleSelect = async (src: string) => {
     setSelectedImage(src === selectedImage ? null : src); // Toggle selection
   };
+
+  const [price, setPrice] = useState(0.0001);
 
   return (
     <>
@@ -141,6 +143,15 @@ const Home: NextPage = () => {
               ))}
             </div>
 
+            <p className="m-0 text-xl">{`Price (in ${selectedImage})`}</p>
+            <input
+              type="number"
+              value={price}
+              onChange={e => setPrice(Number(e.target.value))}
+              placeholder=".01"
+              className="focus:border-primary bg-secondary w-[400px] rounded-lg border p-4"
+            />
+
             <button
               className="btn btn-primary btn-lg"
               onClick={async () => {
@@ -153,7 +164,7 @@ const Home: NextPage = () => {
 
                 await writePoidhAsync({
                   functionName: "createSoloBounty",
-                  value: parseEther(".0001"),
+                  value: parseEther(price.toString()),
                   args: [titleResponse, descriptionResponse],
                 });
 
