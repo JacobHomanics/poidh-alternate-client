@@ -3,21 +3,15 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { getChatGPTResponse, getChatGPTResponse2 } from "../services/openaiService";
 import type { NextPage } from "next";
-import { formatEther, parseEther } from "viem";
-import { base, degen, mainnet } from "viem/chains";
-import { useAccount } from "wagmi";
+import { parseEther } from "viem";
+import { base, degen } from "viem/chains";
 import { switchChain } from "wagmi/actions";
-import { BugAntIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { Slider } from "~~/components/Slider";
-import { Address } from "~~/components/scaffold-eth";
-import { useScaffoldContract, useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
+import { useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { wagmiConfig } from "~~/services/web3/wagmiConfig";
 
 const Home: NextPage = () => {
-  const { address: connectedAddress } = useAccount();
-
   const { writeContractAsync: writePoidhAsync } = useScaffoldWriteContract("poidh");
 
   const [input, setInput] = useState("");
